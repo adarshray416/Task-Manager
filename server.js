@@ -8,9 +8,10 @@ app.use(express.json())
 
 app.use('/', express.static(__dirname + '/public'))
 app.use("/todo",todoroute)
+const server_port=process.env.PORT ||3333
 db.sync()
 .then(()=>{
-  app.listen(6543)
+  app.listen(server_port)
 })
 .catch((err)=>{
 Console.error(err);
