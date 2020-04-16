@@ -1,3 +1,5 @@
+
+
 const {Router}=require("express")
 const  Todo  = require('../db').todos
 const noteroute=require('./note')
@@ -46,6 +48,26 @@ route.get("/",async (req,res)=>{
           
             res.status(201).send({success: 'New task added', data: newTodo})
           })
+
+          route.patch('/:id',async (req, res) => {
+            let id = req.params.id
+            
+            // if (req.body.done == 'true') {
+            //   req.body.done = true
+            // } else {
+            //   req.body.done = false
+            // }
+            let task = await Todo.findByPk(id)
+          
+               
+               task.done= req.body.done
+               task.due= req.body.due
+               task.priority= req.body.priority
+               await task.save();
+          
+            res.status(201).send({success: ' task updated', data: task})
+          })
+
     
     
 module.exports = route
